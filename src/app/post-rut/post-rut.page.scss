@@ -1,0 +1,34 @@
+.map-container{
+        width: 100%;
+        height: 100%;
+        position: relative; // Esto permite posicionar absolutamente el botón dentro del contenedor
+}
+
+.floating-button {
+        position: absolute;
+        bottom: 20px; // Puedes ajustar esto según tus necesidades
+        right: 20px; // Puedes ajustar esto según tus necesidades
+        z-index: 1000; // Asegúrate de que esté por encima del mapa
+      
+        button {
+                background-color: #4CAF50; // Color de fondo (verde)
+                color: white; // Color del texto
+                padding: 10px 20px; // Espaciado interior
+                border: none; // Sin bordes
+                border-radius: 5px; // Bordes redondeados
+                font-size: 16px; // Tamaño del texto
+                font-weight: bold; // Grosor del texto
+                cursor: pointer; // Estilo del cursor como puntero
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); // Sombra para dar efecto 3D
+            
+                &:hover {
+                  background-color: #45a049; // Cambiar el color al pasar el mouse
+                }
+            
+                &:active {
+                  background-color: #367c39; // Cambiar el color al hacer clic
+                  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); // Reducir la sombra al hacer clic
+                }
+              }
+        }
+      

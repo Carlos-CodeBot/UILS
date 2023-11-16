@@ -15,7 +15,17 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'map',
+    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
+  },
+  {
+    path: 'post-rut',
+    loadChildren: () => import('./post-rut/post-rut.module').then( m => m.PostRutPageModule)
+  }
 ];
+
+
 
 @NgModule({
   imports: [
@@ -24,3 +34,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

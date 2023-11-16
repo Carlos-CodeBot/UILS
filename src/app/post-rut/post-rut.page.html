@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>PostRut</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">map</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div class="map-container" id="map" style="height: 100%;"></div>
+  <div class="floating-button" *ngIf="paradas.length >= 4">
+    <button ion-button (click)="publicarRuta()">Publicar Ruta</button>
+  </div>
+
+</ion-content>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>

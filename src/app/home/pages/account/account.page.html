@@ -1,0 +1,68 @@
+<ion-content class="app-page scroll-bar">
+    <div class="c-summary">
+        <i class="material-icons-outlined">person</i>
+        <h2>Información del usuario</h2>
+        <div>
+            <span>Nombre de usuario:</span>
+            <span>{{ user?.data?.username }}</span>
+        </div>
+        <div>
+            <span>Nombre completo:</span>
+            <span>{{ user?.data?.fullName | titlecase }}</span>
+        </div>
+        <div>
+            <span>Teléfono:</span>
+            <span>{{ user?.data?.phoneNumber }}</span>
+        </div>
+        <div>
+            <span>Correo eléctronico:</span>
+            <span>{{ user?.data?.email }}</span>
+        </div>
+        <div>
+            <span>Rol:</span>
+            <span>{{ (user?.data?.role === 'passenger' ? 'Pasajero' : 'Conductor') | titlecase }}</span>
+        </div>
+        <ion-button
+          class="action-btn secondary"
+          fill="outline"
+          size="large"
+          (click)="goToEdit('user')"
+          ><i class="material-icons-outlined">edit</i
+          >{{ "Editar info"  }}</ion-button
+        >
+    </div>
+    <ng-container *ngIf="user?.data?.role === 'driver' && user?.data?.vehicle">
+        <div class="c-summary">
+            <i class="material-icons-outlined">directions_car</i>
+            <h2>Información del vehiculo</h2>
+            <div>
+                <span>Marca:</span>
+                <span>{{ user?.data?.vehicle.brand | titlecase }}</span>
+            </div>
+            <div>
+                <span>Modelo:</span>
+                <span>{{ user?.data?.vehicle.model | titlecase }}</span>
+            </div>
+            <div>
+                <span>Número de la placa:</span>
+                <span>{{ user?.data?.vehicle.licensePlate | uppercase }}</span>
+            </div>
+            <div>
+                <span>Color:</span>
+                <span>{{ user?.data?.vehicle.color | titlecase }}</span>
+            </div>
+            <div>
+                <span>Capacidad:</span>
+                <span>{{ user?.data?.vehicle.capacity }}</span>
+            </div>
+            <ion-button
+                class="action-btn secondary"
+                fill="outline"
+                size="large"
+                (click)="goToEdit('vehicle')"
+                ><i class="material-icons-outlined">edit</i
+                >{{ "Editar info"  }}</ion-button
+            >
+        </div>
+    </ng-container>
+</ion-content>

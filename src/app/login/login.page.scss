@@ -60,9 +60,18 @@ ion-content {
     width: 100%;
     max-width: 350px; /* Ajusta este valor según lo que necesites, por ejemplo, si quieres que el contenedor tenga un ancho máximo de 400px en pantallas grandes */
     padding: 20px;
-    background-color: rgba(248, 9, 9, 0.7); /* Esto es opcional, si deseas que tenga un fondo ligeramente blanco */
+    background-color: rgba(189, 186, 186, 0.973); /* Esto es opcional, si deseas que tenga un fondo ligeramente blanco */
     border-radius: 10px; /* Esto es opcional, para tener bordes redondeados */
     box-shadow: 0 2px 10px rgba(90, 90, 90, 0.61); /* Esto es opcional, para darle una sombra sutil */
     justify-content: center; /* Centra el contenido verticalmente */
     align-items: center;     /* Centra el contenido horizontalmente */
+}
+
+.Centrar{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

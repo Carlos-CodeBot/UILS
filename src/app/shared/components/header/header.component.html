@@ -1,0 +1,71 @@
+<!-- header -->
+<ng-container *ngIf="headerService.shouldShow !== false">
+  <ion-header
+    class="app-header{{
+      headerService?.actions?.goBack && headerService.largeMode ? ' large' : ''
+    }}"
+    id="app-header"
+  >
+    <ion-toolbar>
+      <ng-container *ngIf="headerService.actions">
+        <!-- go back action -->
+        <ng-container *ngIf="headerService.actions.goBack">
+          <ion-buttons slot="start">
+            <ion-button
+              class="go-back"
+              (click)="headerService.actions.goBack()"
+              title="Atrás"
+              ><i class="material-icons">arrow_back</i></ion-button
+            >
+          </ion-buttons>
+        </ng-container>
+        <!-- secondary action -->
+        <ng-template #secondaryAction>
+          <ng-container *ngIf="headerService.actions.secondary">
+            <ion-buttons slot="start">
+              <ion-button
+                [class]="headerService.actions.secondary.cssClass ?? ''"
+                (click)="headerService.actions.secondary.action()"
+                [title]="headerService.actions.secondary.name"
+                ><i class="material-icons-outlined">{{
+                  headerService.actions.secondary.icon
+                }}</i></ion-button
+              >
+            </ion-buttons>
+          </ng-container>
+        </ng-template>
+        <!-- primary action -->
+        <ng-container *ngIf="headerService.actions.primary">
+          <ion-buttons slot="end">
+            <ion-button
+              [class]="headerService.actions.primary.cssClass ?? ''"
+              (click)="headerService.actions.primary.action()"
+              [title]="headerService.actions.primary.name"
+              ><i class="material-icons-outlined">{{
+                headerService.actions.primary.icon
+              }}</i></ion-button
+            >
+          </ion-buttons>
+        </ng-container>
+      </ng-container>
+      <!-- here is rendered the content pass to the header. Ej: -> <app-header>content here</app-header> -->
+      <ng-content></ng-content>
+      <ng-container *ngIf="headerService.title && !headerService.largeMode">
+        <ion-title
+          style="text-align: center"
+          [class]="!headerService.actions ? 'take-available' : ''"
+          [innerHTML]="headerService.title | sentenceCase"
+        ></ion-title>
+      </ng-container>
+    </ion-toolbar>
+    <ng-container *ngIf="headerService.largeMode">
+      <ion-toolbar>
+        <ng-container *ngIf="headerService.title">
+          <ion-title
+            [innerHTML]="headerService.title | sentenceCase"
+          ></ion-title>
+        </ng-container>
+      </ion-toolbar>
+    </ng-container>
+  </ion-header>
+</ng-container>

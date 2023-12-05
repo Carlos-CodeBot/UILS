@@ -1,0 +1,86 @@
+@import '/src/theme/variables.scss';
+
+ion-content {
+    --background: none !important;
+    background-size: cover;
+    background-position: center;
+    overflow: auto;
+
+    &::part(scroll) {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        /** gap: 18px; **/
+        position: relative;
+    }
+
+    ion-item::part(native) {
+        padding-inline-start: 11px;
+    }
+
+    i.material-icons-outlined {
+        font-weight: 600;
+    }
+
+    section.title {
+        text-align: center;
+        margin: 16px auto 24px;
+        & ion-text:first-of-type {
+            font-size: 20px;
+            line-height: 24px;
+        }
+
+        & ion-text:last-of-type {
+            font-size: 16px;
+            line-height: 20px;
+        }
+    }
+
+    .input-with-icon {
+        position: relative;
+
+        > button {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 2;
+            background-color: transparent;
+            color: var(--color-neutral-text);
+        }
+    }
+
+    ion-input {
+        --border-color: transparent;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    :host ion-content {
+        --padding--container: 24px 24px 32px;
+    }
+}
+
+@keyframes grow-from-center {
+    0% {
+        transform: scale(0);
+        transform-origin: center;
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

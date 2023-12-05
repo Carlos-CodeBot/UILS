@@ -1,0 +1,28 @@
+<app-header></app-header>
+<ion-content [fullscreen]="true" class="app-page">
+    <!-- <ion-button>Test</ion-button> -->
+    <div class="map-container" id="map">
+    </div>
+    <ng-container *ngIf="trip">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+            <ion-fab-button size="large">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="top">
+                <ion-fab-button (click)="leaveTrip()">
+                    <i class="material-icons-outlined">logout</i>
+                </ion-fab-button>
+                <ion-fab-button (click)="viewTrip()">
+                    <i class="material-icons-outlined">info</i>
+                </ion-fab-button>
+            </ion-fab-list>
+        </ion-fab>
+    </ng-container>
+</ion-content>
+
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>

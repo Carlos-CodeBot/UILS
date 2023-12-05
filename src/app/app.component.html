@@ -1,3 +1,7 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
+<ion-app id="ionApp">
+  <ion-progress-bar *ngIf="loader.pending.length > 0" type="indeterminate"
+    color="light"></ion-progress-bar>
+  <div class="wrapper--shell"></div>
+  <ion-router-outlet [ngClass]="{ blocked: loader.pending.includes('blocking') }">
+  </ion-router-outlet>
 </ion-app>

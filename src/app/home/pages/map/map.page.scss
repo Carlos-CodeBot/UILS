@@ -1,0 +1,16 @@
+:host {
+    ion-content::part(scroll) {
+        --offset-top: 0px;
+        padding: 0;
+    }
+
+    .map-container {
+        height: 100%;
+    }
+}
+
+@media screen and (min-width: 1281px) {
+    ion-content::part(scroll) {
+        height: 100%;
+    }
+}

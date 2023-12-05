@@ -1,0 +1,107 @@
+<ion-content class="app-page">
+    <i class="material-icons-outlined go-back" (click)="goBack()">arrow_back</i>
+    <section class="title">
+        <ion-text>
+            <h2>Introduce algunos de tus datos ...</h2>
+        </ion-text>
+    </section>
+    <ng-container *ngIf="form">
+        <ion-segment value="passenger" #roleSegment>
+            <ion-segment-button value="passenger">
+                <ion-label>Usuario</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="driver">
+                <ion-label>Conductor</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+        <form [formGroup]="form">
+            <!-- usuario -->
+            <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Nombre de usuario"
+                oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')" 
+                formControlName="username"
+                clearOnEdit="false"
+                maxlength="50"
+                [errorText]="
+                    form.controls.username.hasError('minlength') 
+                        ? 'Debe tener al menos 3 caracteres'
+                        : form.controls.username.hasError('userExists') 
+                        ? 'Este nombre de usuario ya existe'
+                        : 'El valor de este campo es inválido'
+                    "
+                />
+            <!-- password -->
+            <ion-input 
+                class="input-field inside-icon" 
+                shape="round" 
+                fill="outline" 
+                placeholder="Contraseña" 
+                formControlName="password" 
+                [type]="showPassword ? 'text' : 'password'"
+                maxlength="32"
+                clearOnEdit="false" 
+                [errorText]="
+                    form.controls.password.hasError('minlength') 
+                        ? 'Debe tener al menos 8 caracteres'
+                        :'El valor de este campo es inválido'
+                    "
+            />
+            <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Nombre completo"
+                formControlName="fullName"
+                clearOnEdit="false"
+                maxlength="100"
+                [errorText]="
+                    form.controls.fullName.hasError('invalidFullName') 
+                        ? 'Debe tener al menos un nombre y un apellido'
+                        : form.controls.fullName.hasError('fullNameContainsNumbers')
+                        ? 'Este campo no debe tener números'
+                        : 'El valor de este campo es inválido'
+                "
+            />
+
+            <ion-input
+                class="input-field"
+                shape="round"
+                type="number"
+                fill="outline"
+                placeholder="Número de telefono"
+                formControlName="phoneNumber"
+                clearOnEdit="false"
+                maxlength="20"
+                [errorText]="
+                    form.controls.phoneNumber.hasError('invalidPhoneNumber') 
+                        ? 'Número de telefono inválido'
+                        : 'El valor de este campo es inválido'
+                "
+            />
+            <ion-input
+                class="input-field"
+                shape="round"
+                type="email"
+                fill="outline"
+                placeholder="Correo electrónico"
+                formControlName="email"
+                clearOnEdit="false"
+                maxlength="100"
+                [errorText]="
+                    form.controls.email.hasError('invalidEmail') 
+                        ? 'correo electrónico inválido'
+                        : 'El valor de este campo es inválido'
+                "
+            />
+            <ion-button 
+                class="action-btn primary" 
+                size="large" 
+                (click)="signup()"
+                [disabled]="form.invalid"
+                tabindex="3">Siguiente</ion-button>
+        </form>
+    </ng-container>
+</ion-content>

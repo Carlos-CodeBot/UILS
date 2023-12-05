@@ -1,0 +1,48 @@
+@import '/src/theme/variables.scss';
+
+ion-content {
+    section.title {
+        text-align: center;
+        margin: 16px auto 24px;
+
+        & ion-text {
+            font-size: 20px;
+            line-height: 24px;
+        }
+    }
+
+    ion-segment {
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 16px;
+        background-color: var(--color-surface);
+        border-radius: 4px;
+        height: 48px;
+
+        & ion-segment-button {
+            --ripple-color: transparent;
+            &::part(native) {
+                font-family: var(--ion-font-family-semibold);
+                text-transform: none;
+            }
+
+            &.segment-button-checked {
+                &::part(native) {
+                    color: var(--color-on-tertiary-container);
+                }
+    
+                &::part(indicator) {
+                    --indicator-color: transparent;
+                    height: calc(100% - 8px);
+                    width: calc(100% - 8px);
+                    border: none;
+                    margin: 4px;
+                    border-radius: 4px;
+                    background-color: var(--color-tertiary-container);
+                }
+            }
+        }
+
+
+    }
+}

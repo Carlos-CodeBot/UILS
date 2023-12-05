@@ -1,0 +1,111 @@
+ion-app {
+    margin-top: var(--ion-safe-area-top);
+    margin-bottom: var(--ion-safe-area-bottom);
+
+    >ion-progress-bar {
+        pointer-events: none;
+        width: 100%;
+        position: fixed;
+        z-index: 99999;
+
+        /** personaliza el load bar */
+        &::part(track) {
+            background-color: var(--ion-color-background);
+        }
+
+        &::part(progress) {
+            background-color: var(--ion-color-primary);
+        }
+    }
+
+    >ion-router-outlet {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.2s ease;
+
+        &.blocked {
+            opacity: 0.2;
+            pointer-events: none;
+        }
+    }
+
+    >.wrapper--shell {
+        display: none;
+    }
+}
+
+/** La app entra en modo cascarón con telefono */
+@media screen and (min-width: 1281px) {
+    :host {
+        --app--max-width: 412px;
+        --app--max-height: 890px;
+        --app--border-radius: 36px;
+
+        height: auto;
+        width: 100vw;
+        overflow: auto;
+        padding: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    ion-app {
+        width: var(--app--max-width);
+        height: var(--app--max-height);
+        border-radius: var(--app--border-radius);
+        overflow: visible;
+        position: initial;
+
+        >ion-router-outlet {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--app--border-radius);
+            overflow: hidden;
+        }
+
+        >.wrapper--shell {
+            display: block;
+            background: url('../assets/images/app-shell.svg') no-repeat center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: calc(var(--app--max-width) + 49px) calc(var(--app--max-height) + 42px);
+            height: 1200px;
+            width: 500px;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 999999;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(calc(-50% + 0px), calc(-50% + 0px));
+        }
+
+        >ion-progress-bar {
+            border-top-left-radius: var(--app--border-radius);
+            border-top-right-radius: var(--app--border-radius);
+            width: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        & ::ng-deep .modal-default,
+        & ::ng-deep ion-loading {
+            border-radius: var(--app--border-radius);
+        }
+    }
+
+}
+
+/** Esta media query depende de --app--max-height */
+@media screen and (max-height: 960px) and (min-width: 1281px) {
+    :host {
+        align-items: flex-start;
+    }
+}

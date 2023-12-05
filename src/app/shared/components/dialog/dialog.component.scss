@@ -1,0 +1,92 @@
+@import '/src/theme/variables.scss';
+
+:host {
+    --button--height: 36px;
+    --large-padding: 24px;
+    --padding: 16px;
+    --small-padding: 8px;
+    --border-radius: 16px;
+    padding: 2px;
+}
+
+.modal {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    margin: 0;
+    padding: var(--large-padding);
+    border-radius: var(--border-radius);
+    box-shadow: none;
+    & ion-card-header  {
+        & ion-card-title {
+            font-size: 18px !important;
+            font-family: var(--ion-font-family-semibold);
+            color: var(--color-on-surface);
+            margin: 0;
+        }
+        & *[class^=material-icons] {
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: var(--padding);
+            color: var(--color-primary-container);
+        }
+        margin: 0;
+        margin-bottom: var(--padding);
+
+        &.type--info ion-card-title, &.type--info *[class^=material-icons] {
+          color: var(--ion-color-tertiary);
+        }
+
+        &.type--success ion-card-title, &.type--success *[class^=material-icons] {
+          color: var(--ion-color-success);
+        }
+
+        &.type--warning ion-card-title, &.type--warning *[class^=material-icons] {
+          color: var(--ion-color-warning);
+        }
+
+        &.type--error ion-card-title, &.type--error *[class^=material-icons] {
+          color: var(--ion-color-danger);
+        }
+    }
+    & ion-card-content {
+        margin-bottom: var(--large-padding);
+    }
+
+    & ion-card-header, & ion-card-content {
+        padding: 0;
+    }
+
+    &.center--text {
+        text-align: center;
+    }
+}
+
+.actions {
+    --button-color: var(--color-primary-container);
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: var(--small-padding);
+    &.center {
+        justify-content: center;
+        & ion-button {
+            margin-left: 0 !important;
+            margin-right: 16px;
+        }
+    }
+    & ion-button {
+        --padding-start: 12px;
+        --padding-end: 12px;
+        margin: 0;
+        font-family: var(--ion-font-family-semibold);
+        height: var(--button--height);
+        ::ng-deep &::part(native) {
+            color: var(--button-color);
+        }
+
+        &.button-disabled {
+            --button-color: var(--color-inactive-state);
+            opacity: 1;
+        }
+    }
+}

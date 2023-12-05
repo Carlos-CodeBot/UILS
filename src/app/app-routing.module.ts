@@ -3,26 +3,27 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+  },
+  // {
+  //   path: 'login',
+  //   loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  // },
+  // {
+  //   path: 'map',
+  //   loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
+  // },
+  {
+    path: 'post-rut',
+    pathMatch: 'full',
+    loadChildren: () => import('./post-rut/post-rut.module').then( m => m.PostRutPageModule)
   },
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () =>
+      import('./home/home.module').then((m) => m.HomeModule),
   },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },
-  {
-    path: 'map',
-    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
-  },
-  {
-    path: 'post-rut',
-    loadChildren: () => import('./post-rut/post-rut.module').then( m => m.PostRutPageModule)
-  }
 ];
 
 

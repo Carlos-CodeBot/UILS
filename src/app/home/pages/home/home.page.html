@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true" class="app-page">
+  <section>
+    <ion-text><h2>Bienvenido {{ user.data?.fullName?.split(' ')[0] }}</h2></ion-text>
+  </section>
+  <section>
+    <h3>Viajes publicados</h3>
+    <ng-container *ngIf="trips">
+      <ion-card *ngFor="let trip of trips">
+        <ion-card-header>
+          <ion-card-title>{{ trip.departuretime | date: 'h:mm a' }}</ion-card-title>
+          <ion-card-subtitle>{{ trip.driverName }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text><strong>Paradas: </strong> {{ trip.dirRoutes.join(', ') }}</ion-text>
+          <br />
+          <ion-text><strong>Asientos disponibles: </strong> {{ trip.availableSeats }}</ion-text>
+          <br />
+          <ion-text><strong>Vehiculo: </strong> {{ trip.vehicle.brand }} - {{trip.vehicle.model}}</ion-text>
+          <br />
+          <ion-text><strong>Precio: </strong> {{ trip.price }} COP</ion-text>
+        </ion-card-content>
+        <ion-button fill="clear" (click)="takeTrip(trip)">Tomar</ion-button>
+        <ion-button fill="clear" (click)="viewInMap(trip.coordinates)">Ver en mapa</ion-button>
+      </ion-card>
+    </ng-container>
+  </section>
+</ion-content>

@@ -1,0 +1,106 @@
+@import "/src/theme/variables.scss";
+
+:host {
+  --font-size-header: 24px;
+  --button-size: 48px;
+}
+
+.app-header {
+  background-color: var(--ion-color-background);
+  box-shadow: none;
+  border-bottom: 1px solid var(--color-divider);
+  
+  &::after {
+    content: none;
+  }
+  
+  &.large {
+    border-color: var(--ion-color-background);
+    padding: 20px 0 24px;
+    & ion-toolbar {
+      --min-height: auto;
+      &:last-of-type {
+        margin-top: 16px;
+      }
+      & ion-title {
+        padding: 0;
+      }
+    }
+  }
+  
+  & ion-toolbar {
+    padding: 0;
+    --padding-start: var(--margin-lateral);
+    --padding-end: var(--margin-lateral);
+    --background: transparent;
+    --min-height: var(--height-header);
+
+    & ion-title {
+      font-family: var(--ion-font-family-semibold);
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    &:first-of-type {
+      ion-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% - var(--padding-top-bar) * 2 - var(--button-size) * 2);
+  
+        &.take-available {
+          width: calc(100% - var(--padding-top-bar) * 2);
+          padding: 0;
+        }
+      }
+    }
+    
+
+    & ion-buttons {
+      margin: 0;
+    }
+
+    & ion-button {
+      height: var(--button-size);
+      width: var(--button-size);
+      margin: 0px;
+      --color: var(--ion-color-primary);
+      &.go-back {
+        --ripple-color: transparent;
+        --background-hover: transparent;
+        --button-size: 24px;
+        & i {
+          font-weight: 600;
+        }
+      }
+      &::part(native) {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .app-header__content-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      margin-right: 16px;
+
+      & ::ng-deep ion-text.title, & ::ng-deep ion-text.title p {
+          font-family: var(--ion-font-family-medium);
+          text-align: center;
+          font-size: var(--font-size--header);
+      }
+
+      & ::ng-deep ion-text.title {
+        width: 70%;
+        & p {
+          display: inline;
+          white-space: nowrap;
+        }
+      }
+  }
+
+}

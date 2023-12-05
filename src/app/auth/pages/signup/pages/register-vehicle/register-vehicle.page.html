@@ -1,0 +1,68 @@
+<ion-content class="app-page">
+    <section class="title">
+        <ion-text>
+            <h2>Antes de continuar ...</h2>
+            <ion-text>Necesitamos información sobre tu vehiculo</ion-text>
+        </ion-text>
+    </section>
+    <ng-container *ngIf="form">
+        <form [formGroup]="form">
+            <!-- Brand -->
+            <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Marca del vehiculo"
+                formControlName="brand"
+                clearOnEdit="false"
+                maxlength="50"
+                [errorText]="
+                    form.controls.brand.hasError('minlength') 
+                        ? 'Debe tener al menos 3 caracteres'
+                        :'El valor de este campo es inválido'
+                    "
+                />
+            <!-- Model -->
+            <ion-input 
+                class="input-field inside-icon" 
+                shape="round" 
+                fill="outline" 
+                placeholder="Modelo" 
+                formControlName="model" 
+                maxlength="50"
+                clearOnEdit="false" 
+                [errorText]="
+                    form.controls.model.hasError('minlength') 
+                        ? 'Debe tener al menos 4 caracteres'
+                        :'El valor de este campo es inválido'
+                    "
+            />
+            <!-- License plate -->
+            <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Número de la placa"
+                formControlName="licensePlate"
+                clearOnEdit="false"
+                maxlength="20"
+                oninput="this.value = this.value.toUpperCase()"
+                (input)="onLicensePlateInput($event)" 
+                [errorText]="
+                    form.controls.licensePlate.hasError('invalidLicensePlate') 
+                        ? 'Número de placa inválido'
+                        : 'El valor de este campo es inválido'
+                "
+            />
+            <app-select [config]="selectColorConfig" (selectChange)="colorSelectionChange($event)" />
+
+            <app-select [config]="selectCapacityConfig" (selectChange)="capacitySelectionChange($event)" />
+            <ion-button 
+                class="action-btn primary" 
+                size="large" 
+                (click)="register()"
+                [disabled]="form.invalid"
+                tabindex="3">Continuar</ion-button>
+        </form>
+    </ng-container>
+</ion-content>

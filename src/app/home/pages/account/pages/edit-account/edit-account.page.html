@@ -1,0 +1,139 @@
+<ion-content class="app-page scroll-bar">
+    <ng-container *ngIf="form">
+        <form [formGroup]="form">
+            <ng-container *ngIf="editMode === 'user'; else vehicleInputs">
+                <!-- usuario -->
+                <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Nombre de usuario"
+                formControlName="username"
+                helperText="Nombre de usuario"
+                />
+                <!-- full name -->
+                <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Nombre completo"
+                formControlName="fullName"
+                clearOnEdit="false"
+                maxlength="100"
+                helperText="Nombre completo"
+                [errorText]="
+                    form.controls.fullName.hasError('invalidFullName') 
+                        ? 'Debe tener al menos un nombre y un apellido'
+                        : form.controls.fullName.hasError('fullNameContainsNumbers')
+                        ? 'Este campo no debe tener números'
+                        : 'El valor de este campo es inválido'
+                "
+                required
+                />
+                <ion-input
+                    class="input-field"
+                    shape="round"
+                    type="number"
+                    fill="outline"
+                    placeholder="Número de telefono"
+                    formControlName="phoneNumber"
+                    clearOnEdit="false"
+                    maxlength="20"
+                    [errorText]="
+                        form.controls.phoneNumber.hasError('invalidPhoneNumber') 
+                            ? 'Número de telefono inválido'
+                            : 'El valor de este campo es inválido'
+                    "
+                    required
+                />
+
+                <ion-input
+                    class="input-field"
+                    shape="round"
+                    type="email"
+                    fill="outline"
+                    placeholder="Correo electrónico"
+                    formControlName="email"
+                    clearOnEdit="false"
+                    maxlength="100"
+                    [errorText]="
+                        form.controls.email.hasError('invalidEmail') 
+                            ? 'correo electrónico inválido'
+                            : 'El valor de este campo es inválido'
+                    "
+                    required
+                />
+                <!-- role -->
+                <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Rol"
+                formControlName="role"
+                helperText="Rol"
+                />
+            </ng-container>
+            <ng-template #vehicleInputs>
+                <ion-input
+                    class="input-field"
+                    shape="round"
+                    fill="outline"
+                    placeholder="Marca del vehiculo"
+                    formControlName="brand"
+                    clearOnEdit="false"
+                    maxlength="50"
+                    helperText="Marca del vehiculo"
+                    [errorText]="
+                        form.controls.brand.hasError('minlength') 
+                            ? 'Debe tener al menos 3 caracteres'
+                            :'El valor de este campo es inválido'
+                        "
+                />
+                <!-- Model -->
+                <ion-input 
+                    class="input-field inside-icon" 
+                    shape="round" 
+                    fill="outline" 
+                    placeholder="Modelo" 
+                    formControlName="model" 
+                    maxlength="50"
+                    clearOnEdit="false" 
+                    helperText="Modelo"
+                    [errorText]="
+                        form.controls.model.hasError('minlength') 
+                            ? 'Debe tener al menos 4 caracteres'
+                            :'El valor de este campo es inválido'
+                        "
+                />
+                <!-- License plate -->
+                <ion-input
+                    class="input-field"
+                    shape="round"
+                    fill="outline"
+                    placeholder="Número de la placa"
+                    formControlName="licensePlate"
+                    clearOnEdit="false"
+                    maxlength="20"
+                    oninput="this.value = this.value.toUpperCase()"
+                    (input)="onLicensePlateInput($event)" 
+                    helperText="Número de la placa"
+                    [errorText]="
+                        form.controls.licensePlate.hasError('invalidLicensePlate') 
+                            ? 'Número de placa inválido'
+                            : 'El valor de este campo es inválido'
+                    "
+                />
+
+                <app-select #colorSelect [config]="selectColorConfig" (selectChange)="colorSelectionChange($event)" />
+
+                <app-select #capacitySelect [config]="selectCapacityConfig" (selectChange)="capacitySelectionChange($event)" />
+            </ng-template>
+            <ion-button 
+                class="action-btn primary" 
+                size="large" 
+                (click)="saveChanges()"
+                [disabled]="form.invalid || !didChangeData"
+                tabindex="3">Guardar</ion-button>
+        </form>
+    </ng-container>
+</ion-content>

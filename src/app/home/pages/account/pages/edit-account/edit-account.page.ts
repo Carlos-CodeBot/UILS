@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, ViewWillEnter } from '@ionic/angular';
+import { LoadingController, NavController, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { Subscription, take } from 'rxjs';
 import { optionCapacities, optionColors } from 'src/app/constants/selects';
 import { UserService } from 'src/app/services/user.service';
@@ -14,7 +14,7 @@ import { titleCase } from 'src/app/utils/strings';
   templateUrl: './edit-account.page.html',
   styleUrls: ['./edit-account.page.scss']
 })
-export class EditAccountPage implements ViewWillEnter {
+export class EditAccountPage implements ViewWillEnter, ViewWillLeave {
   @ViewChild("colorSelect") colorSelect: SelectComponent;
   @ViewChild("capacitySelect") capacitySelect: SelectComponent;
   form: FormGroup;
@@ -23,12 +23,14 @@ export class EditAccountPage implements ViewWillEnter {
   dataSub: Subscription;
   selectColorConfig: SelectArgs;
   selectCapacityConfig: SelectArgs;
+  loadingState: boolean;
   constructor(
     private header: HeaderService,
     private fb: FormBuilder,
     private user: UserService,
     private snackbar: SnackbarService,
-    private router: NavController
+    private router: NavController,
+    private loading: LoadingController
   ) {}
 
   ionViewWillEnter(): void {
@@ -78,32 +80,45 @@ export class EditAccountPage implements ViewWillEnter {
     });
   }
 
+  ionViewWillLeave(): void {
+    localStorage.removeItem('tempEdit');
+  }
+
   saveChanges() {
     if (!this.didChangeData) return;
-    let body: any = {};
 
+    this.loadingState = true;
     if (this.editMode === 'user') {
-      if (this.form.value.fullName !== this.user.data?.fullName) {
-        body.fullName = this.form.value.fullName;
-      }
-  
-      if (this.form.value.phoneNumber !== this.user.data?.phoneNumber) {
-        body.phoneNumber = this.form.value.phoneNumber;
-      }
-  
-      if (this.form.value.email !== this.user.data?.email) {
-        body.email = this.form.value.email;
-      }
+      this.saveUserChanges();
+    } else if (this.editMode === 'vehicle') {
+      this.saveVehicleChanges();
+    }
+  }
+
+  async saveUserChanges() {
+    let body: any = {};
+    if (this.form.value.fullName !== this.user.data?.fullName) {
+      body.fullName = this.form.value.fullName;
     }
 
+    if (this.form.value.phoneNumber !== this.user.data?.phoneNumber) {
+      body.phoneNumber = this.form.value.phoneNumber;
+    }
+
+    if (this.form.value.email !== this.user.data?.email) {
+      body.email = this.form.value.email;
+    }
+
+    const loading = await this.createLoadingSpinner();
+
+    loading.present();
     this.user.editUser(body).subscribe({
-      next: (res) => {
-        console.log({ res });
-        if (this.editMode === 'user') {
-          Object.entries(body).forEach(([key, value]) => {
-            this.user.data[key] = value;
-          });
-        }
+      next: (_res) => {
+        loading.dismiss();
+        this.loadingState = false;
+        Object.entries(body).forEach(([key, value]) => {
+          this.user.data[key] = value;
+        });
 
         this.snackbar.show({
           message: 'Los datos se han editado exitosamente!',
@@ -112,10 +127,62 @@ export class EditAccountPage implements ViewWillEnter {
 
         this.router.navigateBack('/account');
       },
-      error: (err) => this.snackbar.showBackError(err),
-    })
+      error: (err) => {
+        loading.dismiss();
+        this.loadingState = false;
+        this.snackbar.showBackError(err)
+      },
+    });
   }
+  
+  async saveVehicleChanges() {
+    let body: any = {};
+    if (this.form.value.brand !== this.user.data?.vehicle?.brand) {
+      body.brand = this.form.value.brand;
+    }
 
+    if (this.form.value.model !== this.user.data?.vehicle?.model) {
+      body.model = this.form.value.model;
+    }
+
+    if (this.form.value.licensePlate !== this.user.data?.vehicle?.licensePlate) {
+      body.licensePlate = this.form.value.licensePlate;
+    }
+
+    if (this.form.value.color !== this.user.data?.vehicle?.color) {
+      body.color = this.form.value.color;
+    }
+    if (this.form.value.capacity !== this.user.data?.vehicle?.capacity) {
+      body.capacity = this.form.value.capacity;
+    }
+
+    const loading = await this.createLoadingSpinner();
+
+    loading.present();
+
+    this.user.editVehicle(body).subscribe({
+      next: (_res) => {
+        loading.dismiss();
+        this.loadingState = false;
+        Object.entries(body).forEach(([key, value]) => {
+          this.user.data.vehicle[key] = value;
+        });
+
+        this.snackbar.show({
+          message: 'Los datos se han editado exitosamente!',
+          type: 'success',
+        });
+
+        this.router.navigateBack('/account');
+      },
+      error: (err) => {
+        loading.dismiss();
+        this.loadingState = false;
+        this.snackbar.showBackError(err);
+      },
+    });
+  }
+  
   onLicensePlateInput(event: any) {
     const inputValue = event.target.value;
     this.form.controls.licensePlate.setValue(inputValue.toUpperCase(), { emitEvent: false });
@@ -259,5 +326,18 @@ export class EditAccountPage implements ViewWillEnter {
 
     return null;
   }
-  
+
+  /**
+   * Método para crear el spinner de carga
+   *
+   * @returns loading element
+   */
+  private async createLoadingSpinner() {
+    const loading = await this.loading.create({
+      backdropDismiss: false,
+      message: '',
+      cssClass: 'loading--empty',
+    });
+    return loading;
+  }
 }

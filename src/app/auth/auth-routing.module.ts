@@ -5,7 +5,6 @@ import { LoginPage } from './pages/login/login.page';
 import { SignupPage } from './pages/signup/signup.page';
 import { AuthPage } from './auth.page';
 import { RegisterVehiclePage } from './pages/signup/pages/register-vehicle/register-vehicle.page';
-import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,17 +14,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPage,
-    canActivate: [AuthGuard],
   },
   {
     path: 'signup',
     component: SignupPage,
-    canActivate: [AuthGuard],
   },
   {
     path: 'register-vehicle',
     component: RegisterVehiclePage,
-    canActivate: [AuthGuard],
   }
 ];
 

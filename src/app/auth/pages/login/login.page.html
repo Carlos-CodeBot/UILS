@@ -14,9 +14,8 @@
                 placeholder="Nombre de usuario"
                 oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')" 
                 formControlName="user"
-                clearInput="true"
                 autocomplete="username"
-                clearOnEdit="false"
+                (keypress)="nextFocus($event, pass)"
                 errorText="{{
                     form.controls.user?.hasError('login')
                     ? 'Usuario o contraseña incorrectos'
@@ -38,6 +37,7 @@
                     [type]="showPassword ? 'text' : 'password'"
                     clearInput="false"
                     clearOnEdit="false"
+                    (keypress)="nextFocus($event, null)"
                     errorText="{{
                         form.controls.password?.hasError('login')
                         ? 'Usuario o contraseña incorrectos'

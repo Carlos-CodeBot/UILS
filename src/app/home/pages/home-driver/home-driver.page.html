@@ -1,1 +1,74 @@
-<p>home-driver works!</p>
+<ion-content [fullscreen]="true" class="app-page">
+    <section class="title">
+        <ng-container *ngIf="user.data; else skeletonTitle">
+            <ion-text>
+                <h2>Bienvenido</h2>
+            </ion-text>
+            <ion-text>
+                <h2>{{ user.data?.fullName | titlecase }}</h2>
+            </ion-text>
+        </ng-container>
+        <ng-template #skeletonTitle>
+            <ion-skeleton-text></ion-skeleton-text>
+            <ion-skeleton-text></ion-skeleton-text>
+        </ng-template>
+    </section>
+    <section class="content">
+        <ng-container *ngIf="tripsService.currTrip; else noTrip">
+            <h3>Mi viaje publicado</h3>
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>
+                        Hora de partida {{ tripsService.currTrip.departureTime | date: 'h:mm a' }}
+                        <i class="material-icons{{
+                        tripsService.currTrip.availableSeats === 1 
+                        ? ' error' 
+                        : tripsService.currTrip.availableSeats === 2 
+                        ? ' warning' 
+                        : tripsService.currTrip.availableSeats > 2 
+                        ? ' success'
+                        : ' error'
+                        }}">circle</i></ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-text class="clamp-3"><strong>Paradas: </strong> {{ tripsService.currTrip.dirRoutes.join(', ')
+                        }}</ion-text>
+                    <ion-text><strong>Asientos disponibles: </strong> {{ tripsService.currTrip.availableSeats }}</ion-text>
+                    <ion-text><strong>Vehiculo: </strong> {{ tripsService.currTrip.vehicle.brand }} -
+                        {{ tripsService.currTrip.vehicle.model }}</ion-text>
+                    <ion-text class="price"><strong>Precio: </strong> {{ tripsService.currTrip.price }} COP</ion-text>
+                </ion-card-content>
+                <ion-button fill="clear" (click)="removeTrip()">Eliminar</ion-button>
+            </ion-card>
+        </ng-container>
+        <ng-template #noTrip>
+            <ng-container *ngIf="tripsService.currTrip === null; else skeleton">
+                <div class="c-empty-data">
+                    <ion-img src="./assets/images/empty.svg" />
+                    <ion-text>
+                        <h2>{{ "No tienes publicaciones" }}</h2>
+                        <p>
+                            {{ "Para publicar un viaje utiliza el botón \"+\"" }}
+                        </p>
+                    </ion-text>
+                </div>
+            </ng-container>
+        </ng-template>
+        <ng-template #skeleton>
+            <ion-skeleton-text></ion-skeleton-text>
+            <ion-skeleton-text animated="true"></ion-skeleton-text>
+        </ng-template>
+    </section>
+    <ion-fab 
+        slot="fixed" 
+        vertical="bottom" 
+        horizontal="end" 
+        >
+        <ion-fab-button 
+            size="large" 
+            (click)="goToPublishRoute()" 
+            [disabled]="tripsService.currTrip || tripsService.currTrip === undefined">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

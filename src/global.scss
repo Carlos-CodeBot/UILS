@@ -456,6 +456,53 @@ ion-refresher {
     color: var(--color-neutral-text);
 }
 
+.c-empty-data {
+    --opacity-bg: 0.8;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 24px;
+
+    margin: 16px var(--margin-lateral) 0;
+    background-color: rgba(var(--color-surface-rgb), var(--opacity-bg));
+    border-radius: var(--border-radius);
+    padding: 32px 16px;
+
+    > ion-img {
+        width: 50%;
+        max-width: 274px;
+        margin: 48px auto 24px;
+    }
+
+    >ion-text {
+        max-width: 450px;
+        text-wrap: pretty;
+
+        & * {
+            opacity: 0.8;
+            color: var(--ion-color-primary);
+        }
+
+        & h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        & p {
+            font-size: 22px;
+            margin-bottom: 32px;
+        }
+
+        text-align: center;
+    }
+}
+
+ion-fab[vertical=bottom] {
+    bottom: 24px;
+}
+
 // small devices
 @media screen and (max-width: 350px) {
     .c-empty-data {

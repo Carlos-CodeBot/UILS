@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ViewWillEnter, iosTransitionAnimation } from '@ionic/angular';
+import { NavController, ViewWillEnter, ViewWillLeave, iosTransitionAnimation } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { HeaderService } from 'src/app/shared/components/header/service/header.service';
@@ -9,7 +9,7 @@ import { DialogService } from 'src/app/shared/services/dialog/dialog.service';
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss']
 })
-export class AccountPage implements ViewWillEnter {
+export class AccountPage implements ViewWillEnter, ViewWillLeave {
   constructor(
     private auth: AuthService,
     private header: HeaderService,
@@ -48,6 +48,10 @@ export class AccountPage implements ViewWillEnter {
           })
       },
     };
+  }
+
+  ionViewWillLeave(): void {
+    this.header.actions = null;
   }
 
   goToEdit(type: 'user' | 'vehicle') {

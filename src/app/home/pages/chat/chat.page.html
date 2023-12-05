@@ -1,1 +1,37 @@
-<p>chat works!</p>
+<ion-content class="app-page">
+    <ng-container *ngIf="chat && chat.chatStatus !== 'closed'; else noChat">
+        <ng-container *ngIf="chat.messages?.length > 0; noMessages">
+            <div *ngFor="let message of chat.messages"> 
+                <ion-text><p>{{ message.time | date: 'MM d:h:mm a' }}</p></ion-text>
+                <div>
+                    <picture>
+                        <ion-img src="./assets/images/user.svg"></ion-img>
+                    </picture>
+                    <div>
+                        <ion-text><h4>{{ message.senderName | titlecase }}</h4></ion-text>
+                        <ion-text><p>{{ message.message }}</p></ion-text>
+                    </div> 
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #noMessages>
+            <p>No hay mensajes disponibles.</p>
+        </ng-template>
+    </ng-container>
+    <ng-template #noChat>
+        <ng-container *ngIf="chat === null || chat?.chatStatus === 'closed'; else skeleton">
+            <div class="c-empty-data">
+                <ion-img src="./assets/images/empty.svg" />
+                <ion-text>
+                    <h2>{{ "No tienes un chat activo" }}</h2>
+                    <p>
+                        {{ "Para poder acceder a un chat debes estar embarcado en un viaje" }}
+                    </p>
+                </ion-text>
+            </div>
+        </ng-container>
+    </ng-template>
+    <ng-template #skeleton>
+        <ion-skeleton-text></ion-skeleton-text>
+    </ng-template>
+</ion-content>

@@ -76,7 +76,7 @@ export class LoginPage implements OnInit, ViewWillEnter, ViewWillLeave {
         this.router.navigateForward('');
       },
       error: (err) => {
-        if (err.status === 403) {
+        if (err.status === 403 || err.status === 400) {
           this.snackbar.show({
             message: 'Usuario o contraseña incorrectos',
             type: 'error',
@@ -110,7 +110,7 @@ export class LoginPage implements OnInit, ViewWillEnter, ViewWillLeave {
    * @param nextElement siguiente elemento
    */
   nextFocus(event: KeyboardEvent, nextElement) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
       if (nextElement == null) {
         this.login();
@@ -121,10 +121,10 @@ export class LoginPage implements OnInit, ViewWillEnter, ViewWillLeave {
   }
 
   /**
- * Método para crear el spinner de carga
- *
- * @returns loading element
- */
+   * Método para crear el spinner de carga
+   *
+   * @returns loading element
+   */
   private async createLoadingSpinner() {
     const loading = await this.loadingController.create({
       backdropDismiss: false,

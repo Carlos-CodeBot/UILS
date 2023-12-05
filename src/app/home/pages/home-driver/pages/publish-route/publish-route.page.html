@@ -1,0 +1,33 @@
+<ion-content class="app-page">
+    <ng-container *ngIf="form">
+        <form [formGroup]="form">
+            <ion-input
+                class="input-field"
+                shape="round"
+                fill="outline"
+                placeholder="Precio (en COP)"
+                formControlName="price"
+                clearOnEdit="false"
+                maxlength="50"
+                type="number"
+                helperText="Precio para cada pasajero"
+                [errorText]="
+                    form.controls.price.hasError('minValue')
+                        ? 'El valor mínimo es de 2.000 COP'
+                        : form.controls.price.hasError('maxValue')
+                        ? 'El valor máximo es de 20.000 COP'
+                        : 'El valor de este campo es inválido'
+                    "
+                required
+                />
+            <p>Selecciona la hora de salida:</p>
+            <ion-datetime presentation="time" (ionChange)="departureTimeChange($event)" [min]="minTime"></ion-datetime>
+            <ion-button 
+                class="action-btn primary" 
+                size="large" 
+                (click)="publishRoute()"
+                [disabled]="form.invalid"
+                tabindex="3">Publicar</ion-button>
+        </form>
+    </ng-container>
+</ion-content>

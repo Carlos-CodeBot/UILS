@@ -1,0 +1,14 @@
+:host {
+    form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        > ion-button {
+            margin-top: auto;
+        }
+
+        > p {
+            margin-bottom: 16px;
+        }
+    }
+}

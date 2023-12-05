@@ -132,7 +132,7 @@
                 class="action-btn primary" 
                 size="large" 
                 (click)="saveChanges()"
-                [disabled]="form.invalid || !didChangeData"
+                [disabled]="form.invalid || !didChangeData || loadingState"
                 tabindex="3">Guardar</ion-button>
         </form>
     </ng-container>

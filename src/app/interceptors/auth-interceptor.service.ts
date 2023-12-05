@@ -51,7 +51,6 @@ export class AuthInterceptorService implements HttpInterceptor, OnDestroy {
 
         let headers = req.headers
         
-        console.log({ token, url: req.url });
         if (token) {
             headers = headers.set('Authorization', `Bearer ${token}`)
         }

@@ -1,58 +1,76 @@
 <ion-router-outlet></ion-router-outlet>
 <ion-tabs>
     <ion-tab-bar slot="bottom" id="app-bottom-nav">
-        <ng-container *ngIf="menus; else loadingMenus">
-        <ion-tab-button
-          *ngFor="let menu of menus"
-          [tab]="menu.route"
-          [class]="menu.active ? 'tab-selected' : ''"
-        >
-          <div>
-            <i
-            [class]="
-                menu.active ? 'material-icons' : 'material-icons-outlined'
-            "
-            >{{ menu.icon }}</i
-            >
-          </div>
-          <ion-label>{{
-              menu.name
-          }}</ion-label>
-        </ion-tab-button>
+      <ng-container *ngIf="navbar.input; else navBar">
+        <form>
+          <ion-input 
+            class="input-field"
+            shape="round"
+            fill="outline"
+            placeholder="Aa"
+            [formControl]="navbar.input.control"
+            clearOnEdit="false"
+            maxlength="50"
+          />
+          <ion-button [disabled]="navbar.input.control.disabled">
+            <i class="material-icons">send</i>
+          </ion-button>
+        </form>
       </ng-container>
-      <ng-template #loadingMenus>
-        <ng-container *ngIf="menus === undefined">
-          <div class="c-skeletons">
+      <ng-template #navBar>
+        <ng-container *ngIf="menus; else loadingMenus">
+          <ion-tab-button
+            *ngFor="let menu of menus"
+            [tab]="menu.route"
+            [class]="menu.active ? 'tab-selected' : ''"
+          >
             <div>
-              <ion-skeleton-text style="width: 24px; height: 24px" />
-              <ion-skeleton-text
-                style="width: 48px; height: 16px"
-                animated="true"
-              />
+              <i
+              [class]="
+                  menu.active ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{ menu.icon }}</i
+              >
             </div>
-            <div>
-              <ion-skeleton-text style="width: 24px; height: 24px" />
-              <ion-skeleton-text
-                style="width: 48px; height: 16px"
-                animated="true"
-              />
-            </div>
-            <div>
-              <ion-skeleton-text style="width: 24px; height: 24px" />
-              <ion-skeleton-text
-                style="width: 48px; height: 16px"
-                animated="true"
-              />
-            </div>
-            <div>
-              <ion-skeleton-text style="width: 24px; height: 24px" />
-              <ion-skeleton-text
-                style="width: 48px; height: 16px"
-                animated="true"
-              />
-            </div>
-          </div>
+            <ion-label>{{
+                menu.name
+            }}</ion-label>
+          </ion-tab-button>
         </ng-container>
+        <ng-template #loadingMenus>
+          <ng-container *ngIf="menus === undefined">
+            <div class="c-skeletons">
+              <div>
+                <ion-skeleton-text style="width: 24px; height: 24px" />
+                <ion-skeleton-text
+                  style="width: 48px; height: 16px"
+                  animated="true"
+                />
+              </div>
+              <div>
+                <ion-skeleton-text style="width: 24px; height: 24px" />
+                <ion-skeleton-text
+                  style="width: 48px; height: 16px"
+                  animated="true"
+                />
+              </div>
+              <div>
+                <ion-skeleton-text style="width: 24px; height: 24px" />
+                <ion-skeleton-text
+                  style="width: 48px; height: 16px"
+                  animated="true"
+                />
+              </div>
+              <div>
+                <ion-skeleton-text style="width: 24px; height: 24px" />
+                <ion-skeleton-text
+                  style="width: 48px; height: 16px"
+                  animated="true"
+                />
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
       </ng-template>
     </ion-tab-bar>
 </ion-tabs>

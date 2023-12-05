@@ -6,6 +6,8 @@ import { HomeComponent } from './home.component';
 import { ChatPage } from './pages/chat/chat.page';
 import { MapPage } from './pages/map/map.page';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
+import { HomeDriverPage } from './pages/home-driver/home-driver.page';
+import { PublishRoutePage } from './pages/home-driver/pages/publish-route/publish-route.page';
 
 const routes: Routes = [
   {
@@ -24,6 +26,16 @@ const routes: Routes = [
           {
             path: 'home',
             component: HomePage,
+            canActivate: [AuthGuard],
+          },
+          {
+            path: 'home-driver',
+            component: HomeDriverPage,
+            canActivate: [AuthGuard],
+          },
+          {
+            path: 'publish-route',
+            component: PublishRoutePage,
             canActivate: [AuthGuard],
           },
           {

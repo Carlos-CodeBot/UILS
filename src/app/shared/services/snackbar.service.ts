@@ -75,4 +75,8 @@ export class SnackbarService {
 
         return snackbar;
     }
+
+    async snackbarIsOnTop(): Promise<boolean> {
+        return Boolean(await this.controller.getTop());
+    }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -12,25 +13,25 @@ export class AuthGuard implements CanActivate {
    */
   cachedRoute: string;
   constructor(
-    private router: Router,
-    private userService: UserService
+    private router: NavController,
+    private user: UserService
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const isAuthenticated = localStorage.getItem('authToken');
-    console.log({ route: route.routeConfig });
-    if (route.routeConfig.path.startsWith('login')) {
+    const path = route.routeConfig.path;
+    if (path.startsWith('auth')) {
       /**
        * Si está logeado no puede ir al login
        */
       if (!isAuthenticated) {
         return true;
       } else {
-        if (!this.userService.data) {
-          this.userService.loadData();
+        if (!this.user.data) {
+          this.user.loadData();
         }
-        this.router.navigate(['/']);
+        this.router.navigateForward('/');
         return false;
       }
     }
@@ -38,19 +39,39 @@ export class AuthGuard implements CanActivate {
     if (!isAuthenticated) {
       this.cachedRoute = route.routeConfig.path;
   
-      // this.navigation.navigateForward('/login');
-      this.router.navigateByUrl('/auth');
+      this.router.navigateForward('/login');
       return false;
     } else {
-      if (!this.userService.data) {
-        this.userService.loadData();
+      if (!this.user.data) {
+        this.user.loadData();
+      }
+
+      /**
+       * Driver cannot go to passenger home page
+       * and Passenger cannot go to driver home page
+       */
+      if (path === 'home' && this.user.data?.role === 'driver') { 
+
+        this.router.navigateForward('/home-driver');
+        return false;
+      } else if (path === 'home-driver' && this.user.data?.role === 'passenger') {
+        this.router.navigateForward('/home');
+        return false;
+      }
+
+      /**
+       * when user is enrolled in a trip, he cannot go to home page
+       */
+      if (path === 'home' && this.user.data?.role === 'passenger' && localStorage.getItem('onTrip')) {
+        this.router.navigateForward('/map');
+        return false;
       }
       
       if (this.cachedRoute) {
         const redirectRoute = `/${this.cachedRoute}`;
         this.cachedRoute = undefined;
         // this.navigation.navigateForward(redirectRoute);
-        this.router.navigate([redirectRoute]);
+        this.router.navigateForward(redirectRoute);
       }
       return true;
     }

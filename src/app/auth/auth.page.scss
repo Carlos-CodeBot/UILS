@@ -27,17 +27,31 @@ ion-content {
             transform: scale(0);
             animation: grow-from-center 500ms ease-out 500ms;
             animation-fill-mode: forwards;
-
+            
             @media (prefers-reduced-motion) {
                 transform: scale(1);
                 animation: none;
             }
-
+            
             &::part(image) {
                 width: clamp(128px, 30%, 256px);
                 margin: 0 auto;
             }
         }
+        
+        // & h3 {
+        //     animation: fade-in 500ms ease-out 500ms;
+        //     color: white;
+        //     background-color: rgba(0, 0, 0, 0.4);
+        //     text-align: center;
+        //     margin-top: 16px;
+        //     width: fit-content;
+        //     text-wrap: pretty;
+        //     margin: 16px auto 0;
+        //     display: block;
+        //     border-radius: 4px;
+        //     padding: 0 4px;
+        // }
     }
 
     .c-actions {

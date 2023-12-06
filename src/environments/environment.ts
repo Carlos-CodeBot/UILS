@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-   urlBack: 'http://localhost:8080/api',
+   urlBack: 'https://uilsback.azurewebsites.net/api',
  // urlBack: 'http://192.168.1.7:8080/api',
 };
 

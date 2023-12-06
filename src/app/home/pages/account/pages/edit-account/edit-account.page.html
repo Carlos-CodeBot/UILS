@@ -124,7 +124,11 @@
                     "
                 />
 
-                <app-select #colorSelect [config]="selectColorConfig" (selectChange)="colorSelectionChange($event)" />
+                <app-select 
+                    #colorSelect 
+                    [config]="selectColorConfig" 
+                    (selectChange)="colorSelectionChange($event)" 
+                    />
 
                 <app-select #capacitySelect [config]="selectCapacityConfig" (selectChange)="capacitySelectionChange($event)" />
             </ng-template>

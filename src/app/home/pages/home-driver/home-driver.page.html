@@ -31,13 +31,19 @@
                         }}">circle</i></ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
-                    <ion-text class="clamp-3"><strong>Paradas: </strong> {{ tripsService.currTrip.dirRoutes.join(', ')
-                        }}</ion-text>
+                    <ion-text><strong>Lugar de salida: </strong> {{ tripsService.currTrip.startingPlace | titlecase }}</ion-text>
+                    <ion-text><strong>Paradas: </strong></ion-text>
+                    <ul>
+                        <ng-container *ngFor="let stop of tripsService.currTrip.dirRoutes">
+                            <li *ngIf="stop">{{ stop }}</li>
+                        </ng-container>
+                    </ul>
                     <ion-text><strong>Asientos disponibles: </strong> {{ tripsService.currTrip.availableSeats }}</ion-text>
                     <ion-text><strong>Vehiculo: </strong> {{ tripsService.currTrip.vehicle.brand }} -
                         {{ tripsService.currTrip.vehicle.model }}</ion-text>
                     <ion-text class="price"><strong>Precio: </strong> {{ tripsService.currTrip.price }} COP</ion-text>
                 </ion-card-content>
+                <ion-button fill="clear" (click)="goToDetail()">Detalle</ion-button>
                 <ion-button fill="clear" (click)="removeTrip()">Eliminar</ion-button>
             </ion-card>
         </ng-container>

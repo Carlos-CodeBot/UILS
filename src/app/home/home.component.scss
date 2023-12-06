@@ -2,9 +2,15 @@
 
 :host {
     form {
+        position: absolute;
+        bottom: 0;
+        z-index: 15;
         display: flex;
+        align-items: center;
+        height: var(--height-bottom-nav);
         column-gap: 8px;
         padding: 0 24px;
+        background-color: var(--color-surface-variant);
         > ion-input {
             text-align: left;
             --border-radius: 4px;
@@ -14,6 +20,7 @@
         & ion-button {
             --border-radius: 8px;
             --background: var(--color-primary-container);
+            height: 48px;
             & i {
                 color: black;
             }

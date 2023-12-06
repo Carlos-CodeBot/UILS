@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { NavController } from '@ionic/angular';
@@ -22,6 +22,13 @@ export class AuthGuard implements CanActivate {
     const isAuthenticated = localStorage.getItem('authToken');
     const path = route.routeConfig.path;
     if (path.startsWith('auth')) {
+      if (
+        route.children[0].routeConfig.path === 'register-vehicle' &&
+        this.user.data?.vehicle === null &&
+        this.user.data?.role === 'driver'
+      ) {
+        return true;
+      }
       /**
        * Si está logeado no puede ir al login
        */

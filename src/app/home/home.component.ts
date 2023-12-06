@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit, ViewWillEnter {
                 this.menus = this.menus.map((menu) => {
                     /** Asigna el menú como activo o desactivo */
                     menu.active = isRoute(
-                        event.url,
+                        (event instanceof NavigationEnd && event.url === '/' && event.urlAfterRedirects) ? event.urlAfterRedirects : event.url,
                         menu.route
                     );
                     return menu;

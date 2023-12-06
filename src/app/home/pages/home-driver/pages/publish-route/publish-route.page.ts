@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, NavController, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { TripsService } from 'src/app/services/trips.service';
@@ -6,6 +6,8 @@ import { HeaderService } from 'src/app/shared/components/header/service/header.s
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { DatePipe } from '@angular/common';
 import { MapService } from 'src/app/services/map.service';
+import { SelectComponent } from 'src/app/shared/standalone-components/select/select.component';
+import { SelectArgs } from 'src/app/shared/standalone-components/select/models/select-args.model';
 // import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -13,7 +15,9 @@ import { MapService } from 'src/app/services/map.service';
   styleUrls: ['./publish-route.page.scss'],
   providers: [DatePipe],
 })
-export class PublishRoutePage implements ViewWillEnter, ViewWillLeave{
+export class PublishRoutePage implements OnInit, ViewWillEnter, ViewWillLeave{
+  @ViewChild("placeSelect") placeSelect: SelectComponent;
+  public placeConfig: SelectArgs;
   public form: FormGroup;
   public minTime: string;
   constructor(
@@ -27,6 +31,42 @@ export class PublishRoutePage implements ViewWillEnter, ViewWillLeave{
     private loading: LoadingController
   ) { }
 
+  ngOnInit(): void {
+    this.placeConfig = {
+      headerOpts: {
+        title: 'Selecciona el lugar de salida',
+      },
+      options: [
+        {
+          id: 'bucaramanga',
+          nombre: 'Bucaramanga',
+        },
+        {
+          id: 'piedecuesta',
+          nombre: 'Piedecuesta',
+        },
+        {
+          id: 'girón',
+          nombre: 'Girón',
+        },
+        {
+          id: 'floridablanca',
+          nombre: 'Floridablanca',
+        },
+        {
+          id: 'rionegro',
+          nombre: 'Rio negro',
+        },
+      ],
+      placeholder: 'Lugar de salida',
+      helperText: 'Lugar de salida',
+      initialOption: {
+        id: 'bucaramanga',
+        nombre: 'Bucaramanga',
+      },
+    };
+  }
+
   ionViewWillEnter(): void {
     this.header.setTitle('Publicar ruta');
     this.header.setGoBack();
@@ -35,6 +75,7 @@ export class PublishRoutePage implements ViewWillEnter, ViewWillLeave{
     }
     this.mapService.publishRoute = JSON.parse(localStorage.getItem('tempData'));
     this.buildForm();
+    this.form.controls.startingPlace.setValue('bucaramanga');
 
     this.minTime = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss');
   }
@@ -65,7 +106,8 @@ export class PublishRoutePage implements ViewWillEnter, ViewWillLeave{
       dirRoutes: result.addresses,
       coordinates: result.coords,
       price: this.form.value.price,
-      departureTime: this.datePipe.transform(this.form.value.departureTime, 'HH:mm:ss')
+      departureTime: this.datePipe.transform(this.form.value.departureTime, 'HH:mm:ss'),
+      startingPlace: this.form.value.startingPlace,
     }).subscribe({
       next: (res) => {
         loading.dismiss();
@@ -90,14 +132,18 @@ export class PublishRoutePage implements ViewWillEnter, ViewWillLeave{
   }
 
   departureTimeChange(event) {
-    console.log({ value: event.detail.value });
     this.form.controls.departureTime.setValue(event.detail.value);
+  }
+
+  placeSelectionChange(id: any) {
+    this.form.controls.startingPlace.setValue(id);
   }
 
   private buildForm() {
     this.form = this.fb.group({
       price: ['', [Validators.required, this.priceValidator]],
       departureTime: ['', [Validators.required]],
+      startingPlace: ['', [Validators.required]],
     })
   }
 

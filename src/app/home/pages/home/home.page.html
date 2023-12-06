@@ -36,7 +36,13 @@
             <ion-card-subtitle>{{ trip.driverName }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <ion-text class="clamp-3"><strong>Paradas: </strong> {{ trip.dirRoutes.join(', ') }}</ion-text>
+            <ion-text><strong>Lugar de salida: </strong> {{ trip.startingPlace | titlecase }}</ion-text>
+            <ion-text><strong>Paradas: </strong></ion-text>
+            <ul>
+              <ng-container *ngFor="let stop of trip.dirRoutes">
+                <li *ngIf="stop">{{ stop }}</li>
+              </ng-container>
+            </ul>
             <ion-text><strong>Asientos disponibles: </strong> {{ trip.availableSeats }}</ion-text>
             <ion-text><strong>Vehiculo: </strong> {{ trip.vehicle.brand }} - {{trip.vehicle.model}}</ion-text>
             <ion-text class="price"><strong>Precio: </strong> {{ trip.price }} COP</ion-text>

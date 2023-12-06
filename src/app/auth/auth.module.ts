@@ -21,7 +21,7 @@ import { SelectComponent } from '../shared/standalone-components/select/select.c
     AuthRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SelectComponent
+    SelectComponent,
   ],
   declarations: [AuthPage, LoginPage, SignupPage, RegisterVehiclePage]
 })

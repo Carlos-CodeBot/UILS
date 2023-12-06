@@ -21,7 +21,17 @@
                 required
                 />
             <p>Selecciona la hora de salida:</p>
-            <ion-datetime presentation="time" (ionChange)="departureTimeChange($event)" [min]="minTime"></ion-datetime>
+            <ion-datetime 
+                presentation="time" 
+                (ionChange)="departureTimeChange($event)" 
+                [min]="minTime"
+                ></ion-datetime>
+            
+            <app-select 
+                #placeSelect 
+                [config]="placeConfig"
+                (selectChange)="placeSelectionChange($event)" 
+                />
             <ion-button 
                 class="action-btn primary" 
                 size="large" 

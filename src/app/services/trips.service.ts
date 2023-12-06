@@ -8,6 +8,7 @@ export interface Trip {
     driverName: string;
     dirRoutes: string[];
     departureTime: string;
+    startingPlace: string;
     availableSeats: number;
     coordinates: string[];
     vehicle: {
@@ -43,23 +44,6 @@ export class TripsService {
     constructor(private http: HttpClient) { }
     
     getAll() {
-        // return of([{
-        //     id: -1,
-        //     driverName: 'Oscar Lopez',
-        //     dirRoutes: ['Calle 28 #1-16', 'Calle 21#1-15'],
-        //     availableSeats:,
-        //     departureTime: '08:15:00',
-        //     coordinates: ['7.20,-75', '10, -65'],
-        //     vehicle: {
-        //         id: 1,
-        //         brand: 'Mazda',
-        //         model: '3 2023',
-        //         licensePlate: 'ABC-123',
-        //         color: 'rojo',
-        //         capacity: 4,
-        //     },
-        //     price: 100.0
-        // }] as Trip[]);
         return this.http.get<Trip[]>(`${environment.urlBack}/trips/all`);
     }
 
@@ -68,6 +52,7 @@ export class TripsService {
         coordinates: string[];
         price: number;
         departureTime: string;
+        startingPlace: string;
     }) {
         return this.http.post<boolean>(`${environment.urlBack}/trips/new`, {...body});
     }
@@ -92,8 +77,44 @@ export class TripsService {
         return this.http.get<Trip>(`${environment.urlBack}/trips`);
     }
 
-    getChat(idTrip: number) {
-        return this.http.get<TripChat>(`${environment.urlBack}/chat/${idTrip}`);
+    getChat(tripId: number, addHeader?: boolean) {
+        // return of({
+        //     id: -1,
+        //     chatStatus: 'open',
+        //     driverName: 'Carlos Belcast',
+        //     messages: [
+        //         {
+        //             id: -1,
+        //             senderId: 7,
+        //             senderName: 'Carlos Belcast',
+        //             message: 'Hola a todosss',
+        //             time: new Date().toString(),
+        //         },
+        //         {
+        //             id: -1,
+        //             senderId: 7,
+        //             senderName: 'Carlos Belcast',
+        //             message: 'Hola a todosss',
+        //             time: new Date().toString(),
+        //         }
+        //     ]
+        // } as TripChat);
+        return this.http.get<TripChat>(`${environment.urlBack}/chat/${tripId}`, {
+            headers: addHeader ? {'SILENT-REQUEST': 'true'} : {},
+        });
+    }
+
+    sendMessageChat(tripId: number, message: string) {
+        return this.http.post<boolean>(
+            `${environment.urlBack}/chat/send/${tripId}`,
+            {
+                message
+            },
+            {
+                headers: {
+                'SILENT-REQUEST': 'true',
+            }
+        });
     }
 
     loadCurrent() {

@@ -467,7 +467,7 @@ ion-refresher {
 
     margin: 16px var(--margin-lateral) 0;
     background-color: rgba(var(--color-surface-rgb), var(--opacity-bg));
-    border-radius: var(--border-radius);
+    border-radius: 16px;
     padding: 32px 16px;
 
     > ion-img {

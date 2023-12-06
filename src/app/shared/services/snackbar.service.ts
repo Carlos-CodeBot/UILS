@@ -77,6 +77,6 @@ export class SnackbarService {
     }
 
     async snackbarIsOnTop(): Promise<boolean> {
-        return Boolean(await this.controller.getTop());
+        return Boolean(document.querySelector('ion-toast'));
     }
 }

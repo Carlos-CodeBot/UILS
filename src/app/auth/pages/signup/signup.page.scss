@@ -1,6 +1,13 @@
 @import '/src/theme/variables.scss';
 
-ion-content {
+:host ion-content {
+    &::part(scroll) {
+        background-image: url('../../../../assets/images/bg.svg');
+        background-position: left;
+        background-size: cover;
+        // background-position-y: 40px;
+    }
+
     section.title {
         text-align: center;
         margin: 16px auto 24px;
@@ -44,5 +51,18 @@ ion-content {
         }
 
 
+    }
+
+    .input-with-icon {
+        position: relative;
+
+        >button {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 2;
+            background-color: transparent;
+            color: var(--color-neutral-text);
+        }
     }
 }

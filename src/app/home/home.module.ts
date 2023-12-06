@@ -12,6 +12,9 @@ import { MapPage } from './pages/map/map.page';
 import { SharedModule } from '../shared/shared.module';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { PublishRoutePage } from './pages/home-driver/pages/publish-route/publish-route.page';
+import { SelectComponent } from '../shared/standalone-components/select/select.component';
+import { ModalViewTripComponent } from './pages/map/components/modal-view-trip.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -22,8 +25,10 @@ import { PublishRoutePage } from './pages/home-driver/pages/publish-route/publis
     HomePageRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    SelectComponent,
+    PipesModule
   ],
-  declarations: [HomeComponent, HomePage, HomeDriverPage, ChatPage, MapPage, WrapperComponent, PublishRoutePage],
+  declarations: [HomeComponent, HomePage, HomeDriverPage, ChatPage, MapPage, WrapperComponent, PublishRoutePage, ModalViewTripComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeModule { }

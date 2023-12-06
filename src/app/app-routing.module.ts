@@ -8,19 +8,6 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'login',
-  //   loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  // },
-  // {
-  //   path: 'map',
-  //   loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
-  // },
-  {
-    path: 'post-rut',
-    pathMatch: 'full',
-    loadChildren: () => import('./post-rut/post-rut.module').then( m => m.PostRutPageModule)
-  },
   {
     path: '',
     loadChildren: () =>

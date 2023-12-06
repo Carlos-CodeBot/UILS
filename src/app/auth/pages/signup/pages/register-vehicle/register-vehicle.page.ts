@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SelectArgs } from 'src/app/shared/standalone-components/select/models/select-args.model';
@@ -158,7 +157,7 @@ export class RegisterVehiclePage {
     const licensePlate = control.value;
 
     // Regular expression for a Colombian license plate
-    const licensePlateRegex = /^[A-Z]{3}-\d{2,3}[A-Z]$/;
+    const licensePlateRegex = /^[A-Z]{1,3}\d{2,4}[A-Z]{0,2}$/;
 
     if (!licensePlateRegex.test(licensePlate)) {
       return { invalidLicensePlate: true };

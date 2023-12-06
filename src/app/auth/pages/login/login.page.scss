@@ -1,6 +1,6 @@
 @import '/src/theme/variables.scss';
 
-ion-content {
+:host ion-content {
     --background: none !important;
     background-size: cover;
     background-position: center;
@@ -16,6 +16,14 @@ ion-content {
 
     ion-item::part(native) {
         padding-inline-start: 11px;
+    }
+
+    > div {
+        padding: 0 0 24px;
+        background-image: url('../../../../assets/images/bg.svg');
+        background-position: left;
+        background-size: cover;
+        // background-position-y: 40px;
     }
 
     i.material-icons-outlined {

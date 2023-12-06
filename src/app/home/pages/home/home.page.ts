@@ -32,13 +32,6 @@ export class HomePage implements OnDestroy, ViewWillEnter, ViewWillLeave {
     if (localStorage.getItem('onTrip')) {
       this.router.navigateForward('/map', { animation: iosTransitionAnimation });
     }
-    if (
-      this.user.data &&
-      this.user.data.role === 'driver' &&
-      this.user.data.vehicle === null
-    ) {
-      this.router.navigateForward('/auth/register-vehicle');
-    }
 
     this.tripsService.currTrip$.pipe(take(1)).subscribe((trip) => {
       if (!trip) return;
@@ -112,6 +105,8 @@ export class HomePage implements OnDestroy, ViewWillEnter, ViewWillLeave {
 
         this.tripsService.currTrip = trip;
         this.tripsService.currTrip$.next(trip);
+        localStorage.setItem('onTrip', '1');
+        localStorage.setItem('trip', JSON.stringify(trip));
         this.router.navigateForward('/map', { animation: iosTransitionAnimation });
 
       },

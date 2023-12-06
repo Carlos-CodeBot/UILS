@@ -21,10 +21,12 @@ export class InterceptorService implements HttpInterceptor {
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        /**
-         * blocking loader block interactions in the interface until the request is resolved.
-         */
-        this.loader.pending.push(true);
+        if (!req.headers.get('SILENT-REQUEST')) {
+            /**
+             * blocking loader block interactions in the interface until the request is resolved.
+             */
+            this.loader.pending.push(true);
+        }
 
         return next.handle(req).pipe(
             retry({ count: 3, delay: this.shouldRetry }),

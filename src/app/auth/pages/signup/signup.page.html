@@ -34,21 +34,34 @@
                     "
                 />
             <!-- password -->
-            <ion-input 
-                class="input-field inside-icon" 
-                shape="round" 
-                fill="outline" 
-                placeholder="Contraseña" 
-                formControlName="password" 
-                [type]="showPassword ? 'text' : 'password'"
-                maxlength="32"
-                clearOnEdit="false" 
-                [errorText]="
-                    form.controls.password.hasError('minlength') 
-                        ? 'Debe tener al menos 8 caracteres'
-                        :'El valor de este campo es inválido'
-                    "
-            />
+            <div class="input-with-icon">
+                <ion-input
+                    class="input-field inside-icon"
+                    shape="round"
+                    fill="outline"
+                    placeholder="Contraseña"
+                    formControlName="password"
+                    [type]="showPassword ? 'text' : 'password'"
+                    maxlength="32"
+                    clearOnEdit="false"
+                    [errorText]="
+                        form.controls.password.hasError('minlength')
+                            ? 'Debe tener al menos 8 caracteres'
+                            :'El valor de este campo es inválido'
+                        "
+                />
+                <button 
+                    icon-only 
+                    slot="end" 
+                    (click)="this.showPassword = !this.showPassword"
+                    onclick="this.previousSibling.setFocus();" 
+                    tabindex="-1"
+                >
+                    <i class="material-icons-outlined">{{
+                        showPassword ? "visibility_off" : "visibility"
+                        }}</i>
+                </button>
+            </div>
             <ion-input
                 class="input-field"
                 shape="round"

@@ -1,62 +1,64 @@
 <ion-content class="app-page">
-    <i class="material-icons-outlined" (click)="goBack()">arrow_back</i>
-    <section class="title">
-        <ion-text><h2>Hola de nuevo!</h2></ion-text>
-        <ion-text>Nos alegramos mucho de volver a verte!</ion-text>
-    </section>
-    <ng-container *ngIf="form">
-        <form [formGroup]="form">
-            <!-- usuario -->
-            <ion-input
-                class="input-field"
-                shape="round"
-                fill="outline"
-                placeholder="Nombre de usuario"
-                oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')" 
-                formControlName="user"
-                autocomplete="username"
-                (keypress)="nextFocus($event, pass)"
-                errorText="{{
-                    form.controls.user?.hasError('login')
-                    ? 'Usuario o contraseña incorrectos'
-                    : form.controls.user?.touched &&
-                    form.controls.user?.hasError('required')
-                    ? 'El valor de este campo no es válido'
-                    : ''
-                    }}"
-                required
-            />
-            <div class="input-with-icon">
+    <div>
+        <i class="material-icons-outlined" (click)="goBack()">arrow_back</i>
+        <section class="title">
+            <ion-text><h2>¡Hola de nuevo!</h2></ion-text>
+            <ion-text>¡Nos alegramos mucho de volver a verte!</ion-text>
+        </section>
+        <ng-container *ngIf="form">
+            <form [formGroup]="form">
+                <!-- usuario -->
                 <ion-input
-                    #pass
-                    class="input-field inside-icon"
+                    class="input-field"
                     shape="round"
                     fill="outline"
-                    placeholder="Contraseña"
-                    formControlName="password"
-                    [type]="showPassword ? 'text' : 'password'"
-                    clearInput="false"
-                    clearOnEdit="false"
-                    (keypress)="nextFocus($event, null)"
+                    placeholder="Nombre de usuario"
+                    oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')"
+                    formControlName="user"
+                    autocomplete="username"
+                    (keypress)="nextFocus($event, pass)"
                     errorText="{{
-                        form.controls.password?.hasError('login')
+                        form.controls.user?.hasError('login')
                         ? 'Usuario o contraseña incorrectos'
-                        : form.controls.password?.touched &&
-                        form.controls.password?.hasError('required')
+                        : form.controls.user?.touched &&
+                        form.controls.user?.hasError('required')
                         ? 'El valor de este campo no es válido'
                         : ''
-                    }}"
+                        }}"
                     required
                 />
-                <button icon-only slot="end" (click)="this.showPassword = !this.showPassword"
-                    onclick="this.previousSibling.setFocus();" tabindex="-1">
-                    <i class="material-icons-outlined">{{
-                        showPassword ? "visibility_off" : "visibility"
-                        }}</i>
-                </button>
-            </div>
-            <ion-button class="action-btn primary" size="large" (click)="login()"
-                tabindex="3">Ingresar</ion-button>
-        </form>
-    </ng-container>
+                <div class="input-with-icon">
+                    <ion-input
+                        #pass
+                        class="input-field inside-icon"
+                        shape="round"
+                        fill="outline"
+                        placeholder="Contraseña"
+                        formControlName="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        clearInput="false"
+                        clearOnEdit="false"
+                        (keypress)="nextFocus($event, null)"
+                        errorText="{{
+                            form.controls.password?.hasError('login')
+                            ? 'Usuario o contraseña incorrectos'
+                            : form.controls.password?.touched &&
+                            form.controls.password?.hasError('required')
+                            ? 'El valor de este campo no es válido'
+                            : ''
+                        }}"
+                        required
+                    />
+                    <button icon-only slot="end" (click)="this.showPassword = !this.showPassword"
+                        onclick="this.previousSibling.setFocus();" tabindex="-1">
+                        <i class="material-icons-outlined">{{
+                            showPassword ? "visibility_off" : "visibility"
+                            }}</i>
+                    </button>
+                </div>
+                <ion-button class="action-btn primary" size="large" (click)="login()"
+                    tabindex="3">Ingresar</ion-button>
+            </form>
+        </ng-container>
+    </div>
 </ion-content>

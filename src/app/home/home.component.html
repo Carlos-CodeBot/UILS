@@ -1,23 +1,26 @@
 <ion-router-outlet></ion-router-outlet>
 <ion-tabs>
+    <ng-container *ngIf="navbar.input;">
+      <form>
+        <ion-input 
+          class="input-field" 
+          shape="round" 
+          fill="outline" 
+          placeholder="Aa"
+          [formControl]="navbar.input.control" 
+          clearOnEdit="false" 
+          maxlength="500" 
+        />
+        <ion-button 
+          (click)="navbar.input.sendAction()" 
+          [disabled]="navbar.input.control.disabled"
+          >
+          <i class="material-icons">send</i>
+        </ion-button>
+      </form>
+    </ng-container>
     <ion-tab-bar slot="bottom" id="app-bottom-nav">
-      <ng-container *ngIf="navbar.input; else navBar">
-        <form>
-          <ion-input 
-            class="input-field"
-            shape="round"
-            fill="outline"
-            placeholder="Aa"
-            [formControl]="navbar.input.control"
-            clearOnEdit="false"
-            maxlength="50"
-          />
-          <ion-button [disabled]="navbar.input.control.disabled">
-            <i class="material-icons">send</i>
-          </ion-button>
-        </form>
-      </ng-container>
-      <ng-template #navBar>
+      <ng-container *ngIf="!navbar.input">
         <ng-container *ngIf="menus; else loadingMenus">
           <ion-tab-button
             *ngFor="let menu of menus"
@@ -71,6 +74,6 @@
             </div>
           </ng-container>
         </ng-template>
-      </ng-template>
+      </ng-container>
     </ion-tab-bar>
 </ion-tabs>

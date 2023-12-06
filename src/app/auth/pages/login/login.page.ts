@@ -60,7 +60,7 @@ export class LoginPage implements OnInit, ViewWillEnter, ViewWillLeave {
     }
 
     const loading = await this.createLoadingSpinner();
-
+    
     loading.present();
 
     this.auth.login({

@@ -1,22 +1,33 @@
 <ion-content class="app-page">
-    <ng-container *ngIf="chat && chat.chatStatus !== 'closed'; else noChat">
-        <ng-container *ngIf="chat.messages?.length > 0; noMessages">
-            <div *ngFor="let message of chat.messages"> 
-                <ion-text><p>{{ message.time | date: 'MM d:h:mm a' }}</p></ion-text>
+    <ng-container *ngIf="chat && chat.chatStatus === 'open'; else noChat">
+        <div *ngFor="let message of chat.messages" class="message"> 
+            <ion-text><p>{{ message.time | date: 'h:mm a' }}</p></ion-text>
+            <div>
+                <picture>
+                    <ion-img src="./assets/images/user.svg"></ion-img>
+                </picture>
                 <div>
-                    <picture>
-                        <ion-img src="./assets/images/user.svg"></ion-img>
-                    </picture>
-                    <div>
-                        <ion-text><h4>{{ message.senderName | titlecase }}</h4></ion-text>
-                        <ion-text><p>{{ message.message }}</p></ion-text>
-                    </div> 
-                </div>
+                    <ion-text>
+                        <h4>
+                            {{ message.senderName | titlecase }} 
+                            {{message.senderId === user.data?.id ? ' (Yo)' : ''}}
+                        </h4>
+                    </ion-text>
+                    <ion-text><p>{{ message.message }}</p></ion-text>
+                </div> 
+            </div>
+        </div>
+        <ng-container *ngIf="chat.messages?.length === 0">
+            <div class="c-empty-data">
+                <ion-img src="./assets/images/empty.svg" />
+                <ion-text>
+                    <h2>{{ "Sin mensajes todavía" }}</h2>
+                    <p>
+                        {{ "¡Sé el primero en enviar un mensaje al chat!" }}
+                    </p>
+                </ion-text>
             </div>
         </ng-container>
-        <ng-template #noMessages>
-            <p>No hay mensajes disponibles.</p>
-        </ng-template>
     </ng-container>
     <ng-template #noChat>
         <ng-container *ngIf="chat === null || chat?.chatStatus === 'closed'; else skeleton">
@@ -32,6 +43,9 @@
         </ng-container>
     </ng-template>
     <ng-template #skeleton>
-        <ion-skeleton-text></ion-skeleton-text>
+        <div *ngFor="let i of [0, 0, 0]" class="skeleton-message">
+            <ion-skeleton-text animated="true"></ion-skeleton-text>
+            <ion-skeleton-text></ion-skeleton-text>
+        </div>
     </ng-template>
 </ion-content>

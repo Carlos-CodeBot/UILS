@@ -18,7 +18,7 @@
                 <ion-icon name="add"></ion-icon>
             </ion-fab-button>
             <ion-fab-list side="top">
-                <ng-container *ngIf="!departuretimeDifference(30)">
+                <ng-container *ngIf="!departuretimeDifference(30) && user.data?.role === 'passenger'">
                     <ion-fab-button (click)="leaveTrip()" color="danger">
                         <i class="material-icons-outlined">logout</i>
                     </ion-fab-button>

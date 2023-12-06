@@ -2,13 +2,14 @@ import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { LoadingController, NavController, ViewWillEnter, ViewWillLeave, iosTransitionAnimation } from '@ionic/angular';
 import * as L from 'leaflet';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { MapService } from 'src/app/services/map.service';
 import { Trip, TripsService } from 'src/app/services/trips.service';
 import { UserService } from 'src/app/services/user.service';
 import { HeaderService } from 'src/app/shared/components/header/service/header.service';
 import { DialogService } from 'src/app/shared/services/dialog/dialog.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { ModalViewTripComponent } from './components/modal-view-trip.component';
 
 enum MapModes {
   PUBLISH_ROUTE = 0,
@@ -41,10 +42,10 @@ export class MapPage implements AfterViewInit, OnInit, ViewWillEnter, ViewWillLe
     private dialog: DialogService,
     private tripService: TripsService,
     private snackbar: SnackbarService,
-    private user: UserService,
     private router: NavController,
     private datePipe: DatePipe,
-    private loading: LoadingController
+    private loading: LoadingController,
+    public user: UserService
   ) { }
 
   ngOnInit(): void {
@@ -129,12 +130,27 @@ export class MapPage implements AfterViewInit, OnInit, ViewWillEnter, ViewWillLe
           })
         }, 2000);
       }
+
+      if (this.user.data?.role === 'driver') {
+        this.header.setGoBack();
+      }
     } else {
       this.tripSub = this.tripService.currTrip$.subscribe((value) => {
         if (!value) return;
         this.header.setTitle('Detalle del viaje');
         this.trip = value;
+        if (this.user.data?.role === 'driver') {
+          this.header.setGoBack();
+        }
       });
+    }
+
+    if (!this.user.data) {
+      this.user.data$.pipe(take(1)).subscribe((data) => {
+        if (this.mode === MapModes.ON_TRIP && data.role === 'driver') {
+          this.header.setGoBack();
+        }
+      })
     }
   }
 
@@ -150,6 +166,10 @@ export class MapPage implements AfterViewInit, OnInit, ViewWillEnter, ViewWillLe
 
     if (this.trip) {
       this.trip = undefined;
+    }
+
+    if (this.service.publishRoute) {
+      this.service.publishRoute = undefined;
     }
 
     this.tripSub?.unsubscribe();
@@ -197,6 +217,7 @@ export class MapPage implements AfterViewInit, OnInit, ViewWillEnter, ViewWillLe
                 if (!res) return;
                 localStorage.removeItem('onTrip');
                 localStorage.removeItem('trip');
+                this.tripService.currTrip = null;
 
                 this.router.navigateBack('/home', { animation: iosTransitionAnimation });
               },
@@ -217,13 +238,10 @@ export class MapPage implements AfterViewInit, OnInit, ViewWillEnter, ViewWillLe
         title: 'Información del viaje',
         icon: 'info',
       },
-      content:
-        `
-      <ion-text class="clamp-3"><strong>Paradas: </strong> ${this.trip.dirRoutes.join(', ')}</ion-text>
-      <ion-text><strong>Asientos disponibles: </strong> ${this.trip.availableSeats}</ion-text><br />
-      <ion-text><strong>Vehiculo: </strong> ${this.trip.vehicle.brand} - ${this.trip.vehicle.model}</ion-text><br />
-      <ion-text><strong>Precio: </strong> ${this.trip.price} COP</ion-text>
-    `,
+      component: ModalViewTripComponent,
+      data: {
+        trip: this.trip
+      },
       actions: {
         dismiss: {
           name: 'Cerrar',
@@ -314,7 +332,6 @@ export class MapPage implements AfterViewInit, OnInit, ViewWillEnter, ViewWillLe
 
     this.service.getAddress(latitude, longitude).subscribe({
       next: (res: any) => {
-        console.log({ res });
         try {
           this.stops[i].address = this.formatDirection(res.display_name);
         } catch (e) {

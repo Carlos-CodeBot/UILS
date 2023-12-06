@@ -1,6 +1,6 @@
 @import '/src/theme/variables.scss';
 
-ion-content {
+:host ion-content {
     --background: none !important;
     --font-size--title: 28px;
     --padding--container: 24px 24px 64px;

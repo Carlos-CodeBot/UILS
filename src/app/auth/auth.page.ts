@@ -9,18 +9,15 @@ import { NavController, iosTransitionAnimation } from '@ionic/angular';
 export class AuthPage {
     backgroundImages = [
         './assets/images/login-3.jpg',
-        './assets/images/login-4.jpg',
         './assets/images/login-5.jpg',
         './assets/images/login-6.jpg',
         './assets/images/login-7.jpg',
         './assets/images/login-8.jpg',
         './assets/images/login-9.jpg',
-        './assets/images/login-10.jpg',
-        './assets/images/login-11.jpg',
         './assets/images/login-12.jpg',
     ];
 
-    public bgImage = this.backgroundImages[Math.floor(Math.random() * 9)];
+    public bgImage = this.backgroundImages[Math.floor(Math.random() * 6)];
 
     constructor(
         private router: NavController
